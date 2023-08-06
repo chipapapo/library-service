@@ -4,14 +4,18 @@ from drf_spectacular.utils import extend_schema, OpenApiParameter
 from rest_framework import viewsets
 
 from borrowings.models import Borrowing
-from borrowings.serializers import BorrowingSerializer, BorrowingListSerializer, BorrowingCreateSerializer
+from borrowings.serializers import (
+    BorrowingSerializer,
+    BorrowingListSerializer,
+    BorrowingCreateSerializer,
+)
 from user.permissions import IsAdminOrIfAuthenticatedReadOnly
 
 
 class BorrowingViewSet(viewsets.ModelViewSet):
     queryset = Borrowing.objects.all()
     serializer_class = BorrowingSerializer
-    permission_classes = (IsAdminOrIfAuthenticatedReadOnly, )
+    permission_classes = (IsAdminOrIfAuthenticatedReadOnly,)
 
     def get_queryset(self):
         queryset = self.queryset
@@ -46,22 +50,19 @@ class BorrowingViewSet(viewsets.ModelViewSet):
     @extend_schema(
         parameters=[
             OpenApiParameter(
-                name='is-active',
-                description='Filter by not returned book',
+                name="is-active",
+                description="Filter by not returned book",
                 required=False,
-                type=bool
+                type=bool,
             ),
             OpenApiParameter(
-                name='borrow-date',
-                description='Filter by date of borrowing',
+                name="borrow-date",
+                description="Filter by date of borrowing",
                 required=False,
-                type=str
+                type=str,
             ),
             OpenApiParameter(
-                name='user',
-                description='Filter by user',
-                required=False,
-                type=int
+                name="user", description="Filter by user", required=False, type=int
             ),
         ]
     )
