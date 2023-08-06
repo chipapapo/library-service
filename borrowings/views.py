@@ -15,13 +15,17 @@ class BorrowingViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         queryset = self.queryset
 
+        is_active = self.request.query_params.get("is-active")
+
+        if is_active == "true":
+            queryset = queryset.filter(actual_return_date__isnull=True)
+
         if self.request.user.is_staff:
-            date = self.request.query_params.get("date")
+            borrow_date = self.request.query_params.get("borrow-date")
             user_id_str = self.request.query_params.get("user")
 
-            if date:
-                date = datetime.strptime(date, "%Y-%m-%d").date()
-                queryset = queryset.filter(show_time__date=date)
+            if borrow_date:
+                queryset = queryset.filter(borrow_date=borrow_date)
 
             if user_id_str:
                 queryset = queryset.filter(user_id=int(user_id_str))
