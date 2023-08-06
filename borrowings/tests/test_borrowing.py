@@ -14,6 +14,7 @@ from bookshelves.tests.test_books import sample_book
 
 BORROWING_URL = reverse("checkout:borrowing-list")
 
+
 def sample_borrowing(user, **params):
     date = datetime.strptime("2023-12-23", "%Y-%m-%d").date()
     book = sample_book()
@@ -69,9 +70,7 @@ class AuthenticatedBorrowingApiTests(TestCase):
         borrowing3 = sample_borrowing(self.user)
         borrowing4 = sample_borrowing(self.user)
 
-        res = self.client.get(
-            BORROWING_URL, {"is-active": f"true"}
-        )
+        res = self.client.get(BORROWING_URL, {"is-active": f"true"})
 
         serializer1 = BorrowingListSerializer(borrowing1)
         serializer2 = BorrowingListSerializer(borrowing2)
@@ -91,9 +90,7 @@ class AuthenticatedBorrowingApiTests(TestCase):
 
         borrowing3 = sample_borrowing(self.user, borrow_date=date)
 
-        res = self.client.get(
-            BORROWING_URL, {"borrow-date": str(date)}
-        )
+        res = self.client.get(BORROWING_URL, {"borrow-date": str(date)})
 
         serializer1 = BorrowingListSerializer(borrowing1)
         serializer2 = BorrowingListSerializer(borrowing2)
@@ -118,9 +115,7 @@ class AuthenticatedBorrowingApiTests(TestCase):
 
         borrowing3 = sample_borrowing(user)
 
-        res = self.client.get(
-            BORROWING_URL, {"user": self.user.id}
-        )
+        res = self.client.get(BORROWING_URL, {"user": self.user.id})
 
         borrowing4 = sample_borrowing(user1)
 
@@ -177,9 +172,7 @@ class AdminBorrowingApiTests(TestCase):
         borrowing3.borrow_date = date
         borrowing3.save()
 
-        res = self.client.get(
-            BORROWING_URL, {"borrow-date": date}
-        )
+        res = self.client.get(BORROWING_URL, {"borrow-date": date})
 
         serializer1 = BorrowingListSerializer(borrowing1)
         serializer2 = BorrowingListSerializer(borrowing2)
@@ -204,9 +197,7 @@ class AdminBorrowingApiTests(TestCase):
 
         borrowing3 = sample_borrowing(user)
 
-        res = self.client.get(
-            BORROWING_URL, {"user": user.id}
-        )
+        res = self.client.get(BORROWING_URL, {"user": user.id})
 
         borrowing4 = sample_borrowing(user1)
 
