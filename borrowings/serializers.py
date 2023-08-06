@@ -8,7 +8,14 @@ from bookshelves.serializers import BookSerializer
 class BorrowingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Borrowing
-        fields = ("id", "borrow_date", "expected_return_date", "actual_return_date", "book", "user")
+        fields = (
+            "id",
+            "borrow_date",
+            "expected_return_date",
+            "actual_return_date",
+            "book",
+            "user",
+        )
 
 
 class BorrowingListSerializer(BorrowingSerializer):
@@ -17,13 +24,27 @@ class BorrowingListSerializer(BorrowingSerializer):
 
     class Meta:
         model = Borrowing
-        fields = ("id", "borrow_date", "expected_return_date", "actual_return_date", "book", "user")
+        fields = (
+            "id",
+            "borrow_date",
+            "expected_return_date",
+            "actual_return_date",
+            "book",
+            "user",
+        )
 
 
 class BorrowingCreateSerializer(BorrowingSerializer):
     class Meta:
         model = Borrowing
-        fields = ("id", "borrow_date", "expected_return_date", "actual_return_date", "book", "user")
+        fields = (
+            "id",
+            "borrow_date",
+            "expected_return_date",
+            "actual_return_date",
+            "book",
+            "user",
+        )
 
     def create(self, validated_data):
         book = validated_data["book"]
