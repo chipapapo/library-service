@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from drf_spectacular.utils import extend_schema, OpenApiParameter
 from rest_framework import viewsets
 
 from borrowings.models import Borrowing
@@ -41,3 +42,28 @@ class BorrowingViewSet(viewsets.ModelViewSet):
             return BorrowingCreateSerializer
 
         return BorrowingSerializer
+
+    @extend_schema(
+        parameters=[
+            OpenApiParameter(
+                name='is-active',
+                description='Filter by not returned book',
+                required=False,
+                type=bool
+            ),
+            OpenApiParameter(
+                name='borrow-date',
+                description='Filter by date of borrowing',
+                required=False,
+                type=str
+            ),
+            OpenApiParameter(
+                name='user',
+                description='Filter by user',
+                required=False,
+                type=int
+            ),
+        ]
+    )
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)
